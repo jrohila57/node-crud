@@ -1,6 +1,21 @@
-import { Sequelize } from 'sequelize'
+import { Sequelize } from "sequelize";
+import { environment } from "./env";
 
-export const sequelize = new Sequelize(process.env.DB_URL!)
+const config = {
+  database: environment.PGDATABASE,
+  username: environment.PGUSER,
+  password: environment.PGPASSWORD,
+  host: environment.PGHOST,
+  port: Number(environment.PGPORT),
+  
+};
 
- 
- 
+const { database, password, username, host, port } = config;
+
+const db = new Sequelize(database, username, password, {
+  dialect: "postgres",
+  host,
+  port,
+});
+
+export default db;
